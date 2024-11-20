@@ -12,9 +12,11 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/weather', async (req: Request, res: Response) => {
     try {
+        console.log('Received request for /weather');
         const weatherData = await fetchWeatherData();
         res.json(weatherData);
     } catch (error) {
+        console.error('Error in /weather endpoint:', error);
         res.status(500).send('Error fetching weather data');
     }
 });

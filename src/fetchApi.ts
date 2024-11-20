@@ -46,22 +46,25 @@ export async function fetchWeatherData() {
             },
         };
 
-        // `weatherData` now contains a simple structure with arrays for datetime and weather data
-        for (let i = 0; i < weatherData.daily.time.length; i++) {
-            console.log(
-                weatherData.daily.time[i].toISOString(),
-                weatherData.daily.weatherCode[i],
-                weatherData.daily.temperature2mMax[i],
-                weatherData.daily.temperature2mMin[i],
-                weatherData.daily.sunrise[i],
-                weatherData.daily.sunset[i],
-                weatherData.daily.daylightDuration[i],
-                weatherData.daily.sunshineDuration[i],
-                weatherData.daily.precipitationHours[i]
-            );
-        }
+        // Calculate estimated energy generation
+        const installationPower = 2.5; // kW
+        const panelEfficiency = 0.2; // 20%
+        const estimatedEnergy = weatherData.daily.daylightDuration.map((duration, index) => {
+            const hoursOfdaylight = duration / 3600; // Convert seconds to hours
+            return installationPower * hoursOfdaylight * panelEfficiency;
+        });
 
-        return weatherData;
+        // Combine data into the required format
+        const result = weatherData.daily.time.map((date, index) => ({
+            date: date.toISOString(),
+            weatherCode: weatherData.daily.weatherCode[index],
+            temperature2mMax: weatherData.daily.temperature2mMax[index],
+            temperature2mMin: weatherData.daily.temperature2mMin[index],
+            estimatedEnergy: estimatedEnergy[index]
+        }));
+
+        console.log('Weather data:', result);
+        return result;
     } catch (error) {
         console.error('Error fetching weather data:', error);
         throw error;
