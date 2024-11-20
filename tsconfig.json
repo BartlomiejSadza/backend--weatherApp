@@ -16,5 +16,5 @@
     "types": ["node"]
   },
   "include": ["src/**/*"], // Uwzględnij wszystkie pliki w katalogu `src`
-  "exclude": ["node_modules", "dist"] // Wyklucz katalogi `node_modules` i `dist`
+  "exclude": ["node_modules"] // Wyklucz katalogi `node_modules` i `dist`
 }
