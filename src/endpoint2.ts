@@ -48,23 +48,23 @@ export async function fetchWeatherData() {
         },
     };
 
-    // `weatherData` now contains a simple structure with arrays for datetime and weather data
-    for (let i = 0; i < weatherData.hourly.time.length; i++) {
-        console.log(
-            weatherData.hourly.time[i].toISOString(),
-            weatherData.hourly.pressureMsl[i]
-        );
-    }
-    for (let i = 0; i < weatherData.daily.time.length; i++) {
-        console.log(
-            weatherData.daily.time[i].toISOString(),
-            weatherData.daily.temperature2mMax[i],
-            weatherData.daily.temperature2mMin[i],
-            weatherData.daily.daylightDuration[i],
-            weatherData.daily.precipitationHours[i],
-            weatherData.daily.windSpeed10mMax[i]
-        );
-    }
+    // obliczanie tygodniowego podsumowania 
+    const averagePressure = weatherData.hourly.pressureMsl.reduce((acc, v) => acc += v, 0) / weatherData.hourly.pressureMsl.length;
+    const averageSunshineDuration = weatherData.daily.daylightDuration.reduce((acc, v) => acc += v, 0) / weatherData.daily.daylightDuration.length;
+    const maxTemperature = Math.max(...weatherData.daily.temperature2mMax);
+    const minTemperature = Math.min(...weatherData.daily.temperature2mMin);
+    const precipitationDays = weatherData.daily.precipitationHours.filter(hours => hours > 0).length;
+    const weatherSummary = precipitationDays > 3 ? 'z opadami' : 'bez opadów';
 
-    return weatherData;
+    // wiatr do dodania i inne parametry do 'summary'
+    const summary = {
+        averagePressure,
+        averageSunshineDuration,
+        maxTemperature,
+        minTemperature,
+        precipitationDays,
+        weatherSummary
+    }
+    console.log('Tygodniowe podsumowanie:', summary);
+    return summary;
 }
