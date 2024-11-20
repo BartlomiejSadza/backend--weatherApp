@@ -46,15 +46,15 @@ export async function fetchWeatherData() {
             },
         };
 
-        // Calculate estimated energy generation
+        // Szacowanie wygenerowanej energii w kWh
         const installationPower = 2.5; // kW
         const panelEfficiency = 0.2; // 20%
         const estimatedEnergy = weatherData.daily.daylightDuration.map((duration, index) => {
-            const hoursOfdaylight = duration / 3600; // Convert seconds to hours
+            const hoursOfdaylight = duration / 3600; 
             return installationPower * hoursOfdaylight * panelEfficiency;
         });
 
-        // Combine data into the required format
+        // zwracanie wymaganych parametrów dla endpointu nr.1
         const result = weatherData.daily.time.map((date, index) => ({
             date: date.toISOString(),
             weatherCode: weatherData.daily.weatherCode[index],
