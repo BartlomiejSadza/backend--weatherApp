@@ -70,3 +70,13 @@ export async function fetchWeatherData() {
         throw error;
     }
 }
+
+/**
+ * {
+"date": "2024-11-20T00:00:00.000Z",
+"weatherCode": 3,
+"temperature2mMax": 5.550000190734863,
+"temperature2mMin": -0.25,
+"estimatedEnergy": 4.304243087768555
+},
+ */
