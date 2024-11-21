@@ -16,8 +16,11 @@ COPY . .
 # Zainstaluj TypeScript globalnie
 RUN npm install -g typescript
 
+# Zainstaluj node-fetch globalnie
+RUN npm install -g node-fetch
+
 # Skompiluj TypeScript do JavaScript
-RUN tsc
+RUN npm run build
 
 # Otwórz port 3000
 EXPOSE 3000
