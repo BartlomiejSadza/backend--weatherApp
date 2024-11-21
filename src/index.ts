@@ -11,8 +11,18 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Siema z backendu w TypeScript!');
 });
 
-app.get('/endpoint1', async (req: Request, res: Response) => {
+const validateCoordinates = (lat: any, lon: any): boolean => {
+    const latitude = Number(lat);
+    const longitude = Number(lon);
+    return !isNaN(latitude) && !isNaN(longitude) && latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180;
+};
+
+app.get('/endpoint1', async (req: Request, res: Response): Promise<void> => {
     const { lat, lon } = req.query;
+    if (!validateCoordinates(lat, lon)) {
+        res.status(400).send('Invalid latitude or longitude');
+        return;
+    }
     try {
         console.log('Received request for /endpoint1');
         const weatherData = await fetchWeatherData1(Number(lat), Number(lon));
@@ -23,8 +33,12 @@ app.get('/endpoint1', async (req: Request, res: Response) => {
     }
 });
 
-app.get('/endpoint2', async (req: Request, res: Response) => {
+app.get('/endpoint2', async (req: Request, res: Response): Promise<void> => {
     const { lat, lon } = req.query;
+    if (!validateCoordinates(lat, lon)) {
+        res.status(400).send('Invalid latitude or longitude');
+        return;
+    }
     try {
         console.log('Received request for /endpoint2');
         const weatherData = await fetchWeatherData2(Number(lat), Number(lon));
