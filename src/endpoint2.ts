@@ -55,6 +55,7 @@ export async function fetchWeatherData() {
     const minTemperature = Math.min(...weatherData.daily.temperature2mMin);
     const precipitationDays = weatherData.daily.precipitationHours.filter(hours => hours > 0).length;
     const weatherSummary = precipitationDays > 3 ? 'z opadami' : 'bez opadów';
+    const windAverage = weatherData.daily.windSpeed10mMax.reduce((acc, v) => acc += v, 0) / weatherData.daily.windSpeed10mMax.length;
 
     // wiatr do dodania i inne parametry do 'summary'
     const summary = {
@@ -63,7 +64,8 @@ export async function fetchWeatherData() {
         maxTemperature,
         minTemperature,
         precipitationDays,
-        weatherSummary
+        weatherSummary,
+        windAverage
     }
     console.log('Tygodniowe podsumowanie:', summary);
     return summary;
