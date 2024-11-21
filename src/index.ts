@@ -12,9 +12,10 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/endpoint1', async (req: Request, res: Response) => {
+    const { lat, lon } = req.query;
     try {
         console.log('Received request for /endpoint1');
-        const weatherData = await fetchWeatherData1();
+        const weatherData = await fetchWeatherData1(Number(lat), Number(lon));
         res.json(weatherData);
     } catch (error) {
         console.error('Error in /endpoint1 endpoint:', error);
@@ -23,9 +24,10 @@ app.get('/endpoint1', async (req: Request, res: Response) => {
 });
 
 app.get('/endpoint2', async (req: Request, res: Response) => {
+    const { lat, lon } = req.query;
     try {
         console.log('Received request for /endpoint2');
-        const weatherData = await fetchWeatherData2();
+        const weatherData = await fetchWeatherData2(Number(lat), Number(lon));
         res.json(weatherData);
     } catch (error) {
         console.error('Error in /endpoint2 endpoint:', error);

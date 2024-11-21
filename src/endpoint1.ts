@@ -1,18 +1,19 @@
 import { fetchWeatherApi } from 'openmeteo';
 
-const params = {
-    "latitude": 51.5085,
-    "longitude": -0.1257,
-    "daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "daylight_duration", "sunshine_duration", "precipitation_hours"],
-    "models": "ukmo_seamless"
-};
-const url = "https://api.open-meteo.com/v1/forecast";
 
 // Helper function to form time ranges
 const range = (start: number, stop: number, step: number) =>
     Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
 
-export async function fetchWeatherData() {
+export async function fetchWeatherData(lat: number, lon: number) {
+    const params = {
+        "latitude": lat,
+        "longitude": lon,
+        "daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "daylight_duration", "sunshine_duration", "precipitation_hours"],
+        "models": "ukmo_seamless"
+    };
+    const url = "https://api.open-meteo.com/v1/forecast";
+
     try {
         console.log('Fetching weather data...');
         const responses = await fetchWeatherApi(url, params);
