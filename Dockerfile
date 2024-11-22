@@ -1,23 +1,23 @@
 # Użyj oficjalnego obrazu Node.js jako bazowego
-FROM node:14
-
-# Ustaw katalog roboczy w kontenerze
-WORKDIR /app
-
-# Skopiuj plik package.json i package-lock.json do katalogu roboczego
-COPY package*.json ./
-
-# Zainstaluj zależności
-RUN npm install
-
-# Skopiuj resztę plików aplikacji do katalogu roboczego
-COPY . .
+FROM node:20
 
 # Zainstaluj TypeScript globalnie
 RUN npm install -g typescript
 
 # Zainstaluj node-fetch globalnie
 RUN npm install -g node-fetch
+
+# Ustaw katalog roboczy w kontenerze
+WORKDIR /app
+
+# Skopiuj plik package.json i package-lock.json do katalogu roboczego
+COPY package.json ./
+
+# Zainstaluj zależności
+RUN npm install
+
+# Skopiuj resztę plików aplikacji do katalogu roboczego
+COPY . .
 
 # Skompiluj TypeScript do JavaScript
 RUN npm run build
