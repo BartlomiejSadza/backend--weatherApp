@@ -49,13 +49,13 @@ export async function fetchWeatherData(lat: number, lon: number) {
     };
 
     // obliczanie tygodniowego podsumowania 
-    const averagePressure = weatherData.hourly.pressureMsl.reduce((acc, v) => acc += v, 0) / weatherData.hourly.pressureMsl.length;
-    const averageSunshineDuration = weatherData.daily.daylightDuration.reduce((acc, v) => acc += v, 0) / weatherData.daily.daylightDuration.length;
-    const maxTemperature = Math.max(...weatherData.daily.temperature2mMax);
-    const minTemperature = Math.min(...weatherData.daily.temperature2mMin);
+    const averagePressure = Math.floor(weatherData.hourly.pressureMsl.reduce((acc, v) => acc += v, 0) / weatherData.hourly.pressureMsl.length)
+    const averageSunshineDuration = (weatherData.daily.daylightDuration.reduce((acc, v) => acc += v, 0) / weatherData.daily.daylightDuration.length).toFixed(1);
+    const maxTemperature = Math.max(...weatherData.daily.temperature2mMax).toFixed(1);
+    const minTemperature = Math.min(...weatherData.daily.temperature2mMin).toFixed(1);
     const precipitationDays = weatherData.daily.precipitationHours.filter(hours => hours > 0).length;
     const weatherSummary = precipitationDays > 3 ? 'z opadami' : 'bez opadów';
-    const windAverage = weatherData.daily.windSpeed10mMax.reduce((acc, v) => acc += v, 0) / weatherData.daily.windSpeed10mMax.length;
+    const windAverage = (weatherData.daily.windSpeed10mMax.reduce((acc, v) => acc += v, 0) / weatherData.daily.windSpeed10mMax.length).toFixed(1);
 
     // wiatr do dodania i inne parametry do 'summary'
     const summary = {

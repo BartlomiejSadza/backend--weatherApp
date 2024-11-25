@@ -59,9 +59,9 @@ export async function fetchWeatherData(lat: number, lon: number) {
         const result = weatherData.daily.time.map((date, index) => ({
             date: date.toISOString(),
             weatherCode: weatherData.daily.weatherCode[index],
-            temperature2mMax: weatherData.daily.temperature2mMax[index],
-            temperature2mMin: weatherData.daily.temperature2mMin[index],
-            estimatedEnergy: estimatedEnergy[index]
+            temperature2mMax: weatherData.daily.temperature2mMax[index].toFixed(1),
+            temperature2mMin: weatherData.daily.temperature2mMin[index].toFixed(1),
+            estimatedEnergy: estimatedEnergy[index].toFixed(2)
         }));
 
         console.log('Weather data:', result);
