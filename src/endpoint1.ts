@@ -64,9 +64,6 @@ export async function fetchWeatherData(lat: number, lon: number) {
             estimatedEnergy: estimatedEnergy[index]
         }));
 
-
-        // dobra spróbujmy
-
         console.log('Weather data:', result);
         return result;
     } catch (error) {
